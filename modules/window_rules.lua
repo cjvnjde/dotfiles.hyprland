@@ -5,6 +5,16 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name = "browser-picture-in-picture",
+    match = {
+        class = "^(firefox|firefoxdeveloperedition|app[.]zen_browser[.]zen)$",
+        title = "^Picture-in-Picture$",
+    },
+    float = true,
+    pin = true,
+})
+
+hl.window_rule({
     name = "fix-xwayland-drags",
     match = {
         class = "^$",
