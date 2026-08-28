@@ -45,6 +45,7 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | `Super+B` | Open Zen Browser |
 | `Super+Shift+E` | Exit Hyprland |
 | `Print` | Select a region and copy its screenshot to the clipboard |
+| `Shift+Print` | Select a region, save the original, and annotate it with Satty |
 
 ### Windows and layout
 
@@ -145,6 +146,11 @@ sudo pacman -S grim slurp wl-clipboard libnotify
 used to report that no screenshot backend is available. A notification daemon
 or a Quickshell notification service must be running for that message to be
 visible.
+
+`Shift+Print` uses `grim`, `slurp`, `satty`, and `wl-copy`. It saves the original
+capture to `~/Pictures/Screenshots` (or the configured XDG Pictures directory)
+with a `-raw.png` suffix. In Satty, press `Enter` or `Ctrl+C` to copy the
+annotated image to the clipboard, save it beside the original, and close Satty.
 
 ### Runtime configuration modules
 

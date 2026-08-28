@@ -1,5 +1,6 @@
 local main_mod = "SUPER"
 local programs = require("modules.programs")
+local hypr_config_dir = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
 
 local screenshot = [[sh -c '
     if command -v grimshot >/dev/null 2>&1; then
@@ -26,6 +27,7 @@ hl.bind(main_mod .. " + P", hl.dsp.window.pseudo({ action = "toggle" }))
 hl.bind(main_mod .. " + E", hl.dsp.layout("togglesplit"))
 hl.bind(main_mod .. " + D", hl.dsp.group.toggle())
 hl.bind("Print", hl.dsp.exec_cmd(screenshot))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd(hypr_config_dir .. "/hypr/scripts/screenshot-annotate.sh"))
 
 local directions = {
     H = "left",
