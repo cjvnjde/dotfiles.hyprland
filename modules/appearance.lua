@@ -14,8 +14,11 @@ hl.config({
         resize_on_border = false,
         allow_tearing = false,
     },
+    animations = {
+        enabled = false,
+    },
     decoration = {
-        rounding = 8,
+        rounding = 4,
         active_opacity = 1.0,
         inactive_opacity = 1.0,
         shadow = {
@@ -33,6 +36,7 @@ hl.config({
     },
     dwindle = {
         preserve_split = true,
+        force_split = 2,
     },
     misc = {
         force_default_wallpaper = -1,

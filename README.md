@@ -18,12 +18,10 @@ hyprctl reload
 | `modules/monitor.lua` | Default monitor mode, position, and scale |
 | `modules/environment.lua` | Cursor environment variables |
 | `modules/autostart.lua` | Quickshell startup |
-| `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, and shadows |
+| `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, shadows, and disabled animations |
 | `modules/input.lua` | Keyboard layouts, layout switching, mouse, and touchpad |
-| `modules/animations.lua` | Curves and animations |
 | `modules/bindings.lua` | Keyboard, mouse, media, and screenshot bindings |
 | `modules/window_rules.lua` | Application and XWayland rules |
-| `hyprlauncher.conf` | Launcher icons and window size |
 | `hyprtoolkit.conf` | Catppuccin Mocha colors, typography, and rounding |
 | `hyprpaper.conf` | Wallpaper image and display mode |
 
@@ -41,7 +39,7 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 
 | Binding | Action |
 | --- | --- |
-| `Super+T` | Open application picker (`hyprlauncher`) |
+| `Super+T` | Open the Quickshell application picker |
 | `Super+W` | Close active window |
 | `Super+Return` | Open Ghostty |
 | `Super+B` | Open Zen Browser |
@@ -105,7 +103,6 @@ The package names below are for Arch Linux.
 | --- | --- |
 | `hyprland` | Compositor and Lua configuration runtime |
 | `ghostty` | Terminal opened by `Super+Return` |
-| `hyprlauncher` | Application picker opened by `Super+T` |
 | `hyprpaper` | Displays the configured desktop wallpaper |
 | `quickshell` | Provides `qs`, started as the `main` shell configuration |
 | `wireplumber` | Provides `wpctl` for volume and microphone bindings |
@@ -115,7 +112,7 @@ The package names below are for Arch Linux.
 Install the repository packages with:
 
 ```bash
-sudo pacman -S hyprland ghostty hyprlauncher hyprpaper quickshell wireplumber playerctl flatpak
+sudo pacman -S hyprland ghostty hyprpaper quickshell wireplumber playerctl flatpak
 ```
 
 Zen Browser must be installed with the Flatpak application ID used by

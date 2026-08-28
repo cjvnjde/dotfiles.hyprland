@@ -4,7 +4,6 @@ local modules = {
     "autostart",
     "appearance",
     "input",
-    "animations",
     "bindings",
     "window_rules",
 }
