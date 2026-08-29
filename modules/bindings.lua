@@ -16,6 +16,8 @@ local screenshot = [[sh -c '
 
 -- Browser-like hierarchy: Ctrl acts within an app; Super acts across apps.
 hl.bind(main_mod .. " + T", hl.dsp.exec_cmd(programs.launcher))
+hl.bind(main_mod .. " + A", hl.dsp.exec_cmd("qs -c main ipc call ai toggle"))
+hl.bind(main_mod .. " + SHIFT + A", hl.dsp.exec_cmd("qs -c main ipc call ai screenshot"))
 hl.bind(main_mod .. " + W", hl.dsp.window.close())
 
 hl.bind(main_mod .. " + Return", hl.dsp.exec_cmd(programs.terminal))
