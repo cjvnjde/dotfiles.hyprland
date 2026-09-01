@@ -28,6 +28,9 @@ hyprctl reload
 The module loader honors `XDG_CONFIG_HOME`. If it is unset, it loads modules
 from `~/.config/hypr/modules/`.
 
+The window rules float and pin Quickshell note windows so Hyprland owns their
+stacking, workspace visibility, and movement.
+
 ## Keybindings
 
 The main convention mirrors browser shortcuts: `Ctrl` operates within an

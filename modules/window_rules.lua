@@ -15,6 +15,13 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name = "quickshell-pinned-note",
+    match = { title = "^Quickshell Note .+$" },
+    float = true,
+    pin = true,
+})
+
+hl.window_rule({
     name = "fix-xwayland-drags",
     match = {
         class = "^$",
