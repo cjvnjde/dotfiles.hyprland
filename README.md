@@ -52,12 +52,14 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | Binding | Action |
 | --- | --- |
 | `Super+F` | Toggle fullscreen |
+| `Super+Shift+M` | Toggle maximized mode while keeping reserved bar space |
 | `Super+Shift+F` | Toggle floating |
 | `Super+P` | Toggle pseudotiling |
 | `Super+E` | Toggle the dwindle split direction |
 | `Super+D` | Toggle window grouping |
 | `Super+H/J/K/L` | Focus the window left/down/up/right |
 | `Super+Shift+H/J/K/L` | Move the window left/down/up/right |
+| `Super+Ctrl+H/J/K/L` | Move the window into the group left/down/up/right |
 | `Super+Alt+H` | Select previous window in the group |
 | `Super+Alt+L` | Select next window in the group |
 | `Super+left mouse button` | Drag a window |

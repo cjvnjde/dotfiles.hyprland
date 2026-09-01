@@ -24,6 +24,7 @@ hl.bind(main_mod .. " + Return", hl.dsp.exec_cmd(programs.terminal))
 hl.bind(main_mod .. " + B", hl.dsp.exec_cmd(programs.browser))
 hl.bind(main_mod .. " + SHIFT + E", hl.dsp.exit())
 hl.bind(main_mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+hl.bind(main_mod .. " + SHIFT + M", hl.dsp.window.fullscreen({ mode = "maximized", action = "toggle" }))
 hl.bind(main_mod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(main_mod .. " + P", hl.dsp.window.pseudo({ action = "toggle" }))
 hl.bind(main_mod .. " + E", hl.dsp.layout("togglesplit"))
@@ -41,6 +42,7 @@ local directions = {
 for key, direction in pairs(directions) do
     hl.bind(main_mod .. " + " .. key, hl.dsp.focus({ direction = direction }))
     hl.bind(main_mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = direction }))
+    hl.bind(main_mod .. " + CTRL + " .. key, hl.dsp.window.move({ into_group = direction }))
 end
 
 hl.bind(main_mod .. " + ALT + H", hl.dsp.group.prev())
