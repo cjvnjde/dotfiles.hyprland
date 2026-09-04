@@ -16,8 +16,10 @@ hyprctl reload
 | `hyprland.lua` | Entrypoint and module load order |
 | `modules/programs.lua` | Terminal, browser, and launcher commands |
 | `modules/monitor.lua` | Default monitor mode, position, and scale |
+| `modules/workspaces.lua` | Persistent workspaces |
 | `modules/environment.lua` | Cursor environment variables |
 | `modules/autostart.lua` | Quickshell startup |
+| `modules/local.lua` | Optional machine-specific settings, ignored by Git |
 | `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, shadows, and disabled animations |
 | `modules/input.lua` | Keyboard layouts, layout switching, mouse, and touchpad |
 | `modules/bindings.lua` | Keyboard, mouse, media, and screenshot bindings |
@@ -27,6 +29,9 @@ hyprctl reload
 
 The module loader honors `XDG_CONFIG_HOME`. If it is unset, it loads modules
 from `~/.config/hypr/modules/`.
+
+The loader imports `modules/local.lua` when it exists. Keep commands and
+settings that apply only to the current machine there; Git ignores this file.
 
 The window rules float and pin Quickshell note windows so Hyprland owns their
 stacking, workspace visibility, and movement.
@@ -78,6 +83,9 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | `Super+Shift+0` | Move active window to workspace 10 |
 | `Super+S` | Toggle the `magic` special workspace |
 | `Super+Shift+S` | Move active window to the `magic` special workspace |
+
+Workspaces 1 through 5 are persistent, so Hyprland creates them at startup and
+keeps them available when they have no windows.
 
 ### Audio and media
 
