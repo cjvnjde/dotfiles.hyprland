@@ -48,10 +48,16 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | Binding | Action |
 | --- | --- |
 | `Super+T` | Open the Quickshell application picker |
+| `Super+A` | Open the current AI chat without resetting it |
+| `Super+E` | Start a new `general` AI chat |
+| `Super+O` | Start a new English AI chat |
+| `Super+Shift+A` | Select a screenshot and attach it to the current AI chat |
+| `Super+Shift+E` | Select a screenshot for a new `general` AI chat |
+| `Super+Shift+O` | Select a screenshot for a new English AI chat |
 | `Super+W` | Close active window |
 | `Super+Return` | Open Ghostty |
 | `Super+B` | Open Zen Browser |
-| `Super+Shift+E` | Exit Hyprland |
+| `Super+Ctrl+Shift+E` | Exit Hyprland |
 | `Print` | Select a region and copy its screenshot to the clipboard |
 | `Shift+Print` | Select a region, save the original, and annotate it with Satty |
 
@@ -63,7 +69,7 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | `Super+Shift+M` | Toggle maximized mode while keeping reserved bar space |
 | `Super+Shift+F` | Toggle floating |
 | `Super+P` | Toggle pseudotiling |
-| `Super+E` | Toggle the dwindle split direction |
+| `Super+I` | Toggle the dwindle split direction |
 | `Super+D` | Toggle window grouping |
 | `Super+H/J/K/L` | Focus the window left/down/up/right |
 | `Super+Shift+H/J/K/L` | Move the window left/down/up/right |
