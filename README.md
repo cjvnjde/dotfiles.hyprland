@@ -42,10 +42,12 @@ The Quickshell **sun/moon icon** and chat `/theme NAME light|dark` command
 share the GNOME `org.gnome.desktop.interface color-scheme` setting. Dark uses
 Catppuccin Mocha and light uses Latte. `modules/appearance.lua` exposes
 `set_mode(mode)` for Quickshell to update borders, shadows, window group colors,
-and the compositor background without reloading unrelated configuration.
+the compositor background, and the wallpaper without reloading unrelated
+configuration. Light mode uses `assets/bg_light.png`; dark mode uses
+`assets/bg.jpg`, both displayed with cover scaling.
 Quickshell reapplies the selected mode after compositor reloads; without the
-shell running, the compositor starts with Mocha. The configured wallpaper and
-the separate static `hyprtoolkit.conf` palette are unchanged.
+shell running, the compositor starts with Mocha and hyprpaper uses the dark
+wallpaper. The separate static `hyprtoolkit.conf` palette is unchanged.
 
 ## Keybindings
 
