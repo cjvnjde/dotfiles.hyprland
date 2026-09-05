@@ -18,7 +18,7 @@ hyprctl reload
 | `modules/monitor.lua` | Default monitor mode, position, and scale |
 | `modules/workspaces.lua` | Persistent workspaces |
 | `modules/environment.lua` | Cursor environment variables |
-| `modules/autostart.lua` | Quickshell startup |
+| `modules/autostart.lua` | Quickshell startup and graphical-session lifecycle |
 | `modules/local.lua` | Optional machine-specific settings, ignored by Git |
 | `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, shadows, and disabled animations |
 | `modules/input.lua` | Keyboard layouts, layout switching, mouse, and touchpad |
@@ -26,6 +26,7 @@ hyprctl reload
 | `modules/window_rules.lua` | Application and XWayland rules |
 | `hyprtoolkit.conf` | Catppuccin Mocha colors, typography, and rounding |
 | `hyprpaper.conf` | Wallpaper image and display mode |
+| `hyprland-session.target` | Activates the graphical session required by desktop portals |
 
 The module loader honors `XDG_CONFIG_HOME`. If it is unset, it loads modules
 from `~/.config/hypr/modules/`.
@@ -35,6 +36,38 @@ settings that apply only to the current machine there; Git ignores this file.
 
 The window rules float and pin Quickshell note windows so Hyprland owns their
 stacking, workspace visibility, and movement.
+
+## Desktop appearance
+
+The Quickshell **sun/moon icon** and chat `/theme NAME light|dark` command
+share the GNOME `org.gnome.desktop.interface color-scheme` setting. Dark uses
+Catppuccin Mocha and light uses Latte. `modules/appearance.lua` exposes
+`set_mode(mode)` for Quickshell to update borders, shadows, window group colors,
+and the compositor background without reloading unrelated configuration.
+Quickshell reapplies the selected mode after compositor reloads; without the
+shell running, the compositor starts with Mocha. The configured wallpaper and
+the separate static `hyprtoolkit.conf` palette are unchanged.
+
+Running `setup.sh enable` also links `hyprland-session.target` into the user's
+systemd configuration. On login, Hyprland imports its display environment and
+starts the target; on exit, it stops the target. This supplies the active
+`graphical-session.target` required by `xdg-desktop-portal`. The GTK portal
+backend publishes the appearance setting used by Ghostty's automatic
+`light:Catppuccin Latte,dark:Catppuccin Mocha` theme selection.
+
+After applying this to an already running session, activate the target with:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user start hyprland-session.target
+```
+
+Ghostty processes started before a working appearance portal was available
+need one full restart. `Super+Return` normally reuses the existing process, so
+opening another window does not establish a fresh portal connection. Close all
+Ghostty windows before reopening, or use `ghostty --gtk-single-instance=false`
+to open an independent instance without terminating existing sessions.
+Subsequent light/dark changes apply live.
 
 ## Keybindings
 
@@ -128,11 +161,13 @@ The package names below are for Arch Linux.
 | `wireplumber` | Provides `wpctl` for volume and microphone bindings |
 | `playerctl` | MPRIS media controls |
 | `flatpak` | Launches the configured Zen Browser Flatpak |
+| `xdg-desktop-portal-hyprland` | Hyprland desktop portal integration |
+| `xdg-desktop-portal-gtk` | Appearance settings and GTK portal fallbacks |
 
 Install the repository packages with:
 
 ```bash
-sudo pacman -S hyprland ghostty hyprpaper quickshell wireplumber playerctl flatpak
+sudo pacman -S hyprland ghostty hyprpaper quickshell wireplumber playerctl flatpak xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 ```
 
 Zen Browser must be installed with the Flatpak application ID used by
