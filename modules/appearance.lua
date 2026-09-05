@@ -57,7 +57,7 @@ local palettes = {
 	},
 }
 
-local function apply_palette(mode)
+local function set_mode(mode)
 	local palette = assert(palettes[mode], "Unknown appearance mode: " .. tostring(mode))
 	hl.config({
 		general = {
@@ -99,15 +99,6 @@ local function apply_palette(mode)
 	})
 end
 
-local function set_mode(mode)
-	apply_palette(mode)
-
-	local config_dir = os.getenv("XDG_CONFIG_HOME") or (os.getenv("HOME") .. "/.config")
-	local wallpaper = mode == "light" and "bg_light.png" or "bg_dark.jpg"
-	local request = "," .. config_dir .. "/hypr/assets/" .. wallpaper .. ",cover"
-	hl.exec_cmd("hyprctl hyprpaper wallpaper '" .. request:gsub("'", "'\\''") .. "'")
-end
-
-apply_palette("dark")
+set_mode("dark")
 
 return { set_mode = set_mode }

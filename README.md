@@ -25,7 +25,6 @@ hyprctl reload
 | `modules/bindings.lua` | Keyboard, mouse, media, and screenshot bindings |
 | `modules/window_rules.lua` | Application and XWayland rules |
 | `hyprtoolkit.conf` | Catppuccin Mocha colors, typography, and rounding |
-| `hyprpaper.conf` | Wallpaper image and display mode |
 
 The module loader honors `XDG_CONFIG_HOME`. If it is unset, it loads modules
 from `~/.config/hypr/modules/`.
@@ -42,12 +41,13 @@ The Quickshell **sun/moon icon** and chat `/theme NAME light|dark` command
 share the GNOME `org.gnome.desktop.interface color-scheme` setting. Dark uses
 Catppuccin Mocha and light uses Latte. `modules/appearance.lua` exposes
 `set_mode(mode)` for Quickshell to update borders, shadows, window group colors,
-the compositor background, and the wallpaper without reloading unrelated
-configuration. Light mode uses `assets/bg_light.png`; dark mode uses
-`assets/bg.jpg`, both displayed with cover scaling.
+and the compositor background without reloading unrelated configuration.
+Quickshell renders `assets/bg_light.png` in light mode and `assets/bg_dark.jpg`
+in dark mode, both with cover scaling. Its wallpaper window stays alive across
+theme changes and retains the old image until the replacement has loaded.
 Quickshell reapplies the selected mode after compositor reloads; without the
-shell running, the compositor starts with Mocha and hyprpaper uses the dark
-wallpaper. The separate static `hyprtoolkit.conf` palette is unchanged.
+shell running, the compositor starts with Mocha and no custom wallpaper is
+rendered. The separate static `hyprtoolkit.conf` palette is unchanged.
 
 ## Keybindings
 
@@ -136,8 +136,7 @@ The package names below are for Arch Linux.
 | --- | --- |
 | `hyprland` | Compositor and Lua configuration runtime |
 | `ghostty` | Terminal opened by `Super+Return` |
-| `hyprpaper` | Displays the configured desktop wallpaper |
-| `quickshell` | Provides `qs`, started as the `main` shell configuration |
+| `quickshell` | Provides `qs`, started as the `main` shell configuration, including desktop wallpapers |
 | `wireplumber` | Provides `wpctl` for volume and microphone bindings |
 | `playerctl` | MPRIS media controls |
 | `flatpak` | Launches the configured Zen Browser Flatpak |
@@ -145,7 +144,7 @@ The package names below are for Arch Linux.
 Install the repository packages with:
 
 ```bash
-sudo pacman -S hyprland ghostty hyprpaper quickshell wireplumber playerctl flatpak
+sudo pacman -S hyprland ghostty quickshell wireplumber playerctl flatpak
 ```
 
 Zen Browser must be installed with the Flatpak application ID used by
