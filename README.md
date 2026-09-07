@@ -21,7 +21,7 @@ hyprctl reload
 | `modules/autostart.lua` | Quickshell startup |
 | `modules/local.lua` | Optional machine-specific settings, ignored by Git |
 | `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, shadows, and disabled animations |
-| `modules/input.lua` | Keyboard layouts, layout switching, mouse, and touchpad |
+| `modules/input.lua` | Keyboard layout, mouse, and touchpad |
 | `modules/bindings.lua` | Keyboard, mouse, media, and screenshot bindings |
 | `modules/window_rules.lua` | Application and XWayland rules |
 | `hyprtoolkit.conf` | Catppuccin Mocha colors, typography, and rounding |
@@ -118,13 +118,6 @@ keeps them available when they have no windows.
 | `Media Play` | Toggle play/pause |
 | `Media Pause` | Toggle play/pause |
 | `Media Previous` | Previous track |
-
-### Input
-
-| Binding | Action |
-| --- | --- |
-| `Super+Space` | Switch between US and Russian keyboard layouts |
-| `Caps Lock` | Escape |
 
 ## Dependencies
 
