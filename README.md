@@ -73,6 +73,7 @@ picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
 | `Super+Ctrl+Shift+E` | Exit Hyprland |
 | `Print` | Select a region and copy its screenshot to the clipboard |
 | `Shift+Print` | Select a region, save the original, and annotate it with Satty |
+| `Super+U` | Toggle system-audio recording; stop, save MP3, and copy the audio file |
 
 ### Windows and layout
 
@@ -175,6 +176,36 @@ visible.
 capture to `~/Pictures/Screenshots` (or the configured XDG Pictures directory)
 with a `-raw.png` suffix. In Satty, press `Enter` or `Ctrl+C` to copy the
 annotated image to the clipboard, save it beside the original, and close Satty.
+
+### System-audio recording
+
+`Super+U` runs `scripts/record-audio.py`: press once to start, then again to stop.
+`U` is on the Dvorak home row; this binding uses the letter emitted by the
+keyboard, so firmware-level Dvorak does not need a system layout change.
+Start and completion notifications are silent to avoid recording their sounds.
+
+The recorder captures the default output's monitor source, never the microphone.
+It includes all applications playing through that output, with no video.
+The output is selected at startup; stop and restart if you switch audio devices.
+Timestamped MP3 files are saved under the XDG Music directory's `Recordings`
+folder, falling back to `~/Music/Recordings`.
+
+After stopping, the clipboard contains a `text/uri-list` file reference, not
+plain path text or raw audio bytes. Paste into an application that accepts file
+attachments; this does not create an app-specific voice message. Applications
+without file-paste support need their attachment picker or drag-and-drop.
+If clipboard copying fails, the recording remains saved and a notification
+reports its location.
+
+Dependencies: Python 3, FFmpeg with PulseAudio input and `libmp3lame`, `pactl`
+(`libpulse` on Arch), `wl-clipboard`, `libnotify`, and a systemd user session.
+`xdg-user-dirs` supplies the optional Music-directory lookup.
+FFmpeg runs in the transient `hypr-system-audio-recording.service` user unit.
+For recording failures, inspect:
+
+```bash
+journalctl --user -u hypr-system-audio-recording.service
+```
 
 ### Runtime configuration modules
 

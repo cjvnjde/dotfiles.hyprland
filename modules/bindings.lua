@@ -35,6 +35,7 @@ hl.bind(main_mod .. " + I", hl.dsp.layout("togglesplit"))
 hl.bind(main_mod .. " + D", hl.dsp.group.toggle())
 hl.bind("Print", hl.dsp.exec_cmd(screenshot))
 hl.bind("SHIFT + Print", hl.dsp.exec_cmd(hypr_config_dir .. "/hypr/scripts/screenshot-annotate.sh"))
+hl.bind(main_mod .. " + U", hl.dsp.exec_cmd('"' .. hypr_config_dir .. '/hypr/scripts/record-audio.py"'))
 
 local directions = {
     H = "left",
