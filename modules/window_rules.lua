@@ -7,7 +7,7 @@ hl.window_rule({
 hl.window_rule({
     name = "browser-picture-in-picture",
     match = {
-        class = "^(firefox|firefoxdeveloperedition|app[.]zen_browser[.]zen)$",
+        class = "^(firefox|firefoxdeveloperedition|zen-browser)$",
         title = "^Picture-in-Picture$",
     },
     float = true,

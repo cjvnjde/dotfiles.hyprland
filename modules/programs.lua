@@ -1,5 +1,5 @@
 return {
     terminal = "ghostty",
-    browser = "flatpak run app.zen_browser.zen",
+    browser = "zen-browser",
     launcher = "qs -c main ipc call launcher toggle",
 }

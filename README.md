@@ -133,19 +133,18 @@ The package names below are for Arch Linux.
 | `quickshell` | Provides `qs`, started as the `main` shell configuration, including desktop wallpapers |
 | `wireplumber` | Provides `wpctl` for volume and microphone bindings |
 | `playerctl` | MPRIS media controls |
-| `flatpak` | Launches the configured Zen Browser Flatpak |
+| `zen-browser-bin` (AUR) | Zen Browser opened by `Super+B` |
 
 Install the repository packages with:
 
 ```bash
-sudo pacman -S hyprland ghostty quickshell wireplumber playerctl flatpak
+sudo pacman -S hyprland ghostty quickshell wireplumber playerctl
 ```
 
-Zen Browser must be installed with the Flatpak application ID used by
-`modules/programs.lua`:
+Install Zen Browser from the AUR:
 
 ```bash
-flatpak install flathub app.zen_browser.zen
+yay -S zen-browser-bin
 ```
 
 The autostart command is `qs -c main`, so a working Quickshell configuration
