@@ -49,6 +49,12 @@ Quickshell reapplies the selected mode after compositor reloads; without the
 shell running, the compositor starts with Mocha and no custom wallpaper is
 rendered. The separate static `hyprtoolkit.conf` palette is unchanged.
 
+## Keyboard layouts
+
+Hyprland loads the US English and Russian layouts. The Quickshell top bar shows
+the active `EN` or `RU` layout; click it and select a language from the menu.
+There is no keyboard shortcut for changing layouts.
+
 ## Keybindings
 
 The main convention mirrors browser shortcuts: `Ctrl` operates within an
