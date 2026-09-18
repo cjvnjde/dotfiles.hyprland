@@ -15,6 +15,15 @@ hl.window_rule({
 })
 
 hl.window_rule({
+    name = "steam-popups",
+    match = {
+        class = "^steam$",
+        title = "negative:^Steam$",
+    },
+    float = true,
+})
+
+hl.window_rule({
     name = "quickshell-pinned-note",
     match = { title = "^Quickshell Note .+$" },
     float = true,
