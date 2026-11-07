@@ -34,7 +34,11 @@ hl.config({
     decoration = { rounding = 0 },
     animations = { enabled = false },
     misc = { force_default_wallpaper = 0, disable_hyprland_logo = true }, -- wallpaper comes from Quickshell
-    dwindle = { preserve_split = true },
+    dwindle = {
+        preserve_split = true,
+        use_active_for_splits = true,
+        force_split = 2, -- New windows go right/bottom, regardless of cursor position.
+    },
     input = {
         kb_layout = "us,ru",
         -- Hold Left Alt + press Right Alt: next; reverse order: previous.
@@ -98,9 +102,9 @@ for ws = 1, 10 do
     hl.bind(mod .. " + SHIFT + ALT + " .. key, hl.dsp.window.move({ workspace = ws, follow = false }))
 end
 
--- Special workspaces use screen-edge geometry, not the normal bar inset.
--- The bar stays visible and normal workspaces never change size when toggling.
--- With a command: centered, half-height Quake console; otherwise: full scratchpad.
+-- Scratchpads sit below the bar with a small margin showing the workspace behind.
+-- Normal workspaces never change size when toggling special workspaces.
+-- With a command: keep the centered, half-height, screen-edge Quake console.
 local function special_workspace(name, key, command)
     local workspace = "special:" .. name
     local last_geometry
@@ -127,6 +131,13 @@ local function special_workspace(name, key, command)
         if not monitor or not monitor.scale or monitor.scale <= 0 then
             return
         end
+        if not command then
+            -- Match the normal 24px bar inset, plus 12px of breathing room.
+            if cover(36, 12, 12, 12) then
+                hl.exec_scheduled_prop_refresh_immediately()
+            end
+            return
+        end
         local width, height = monitor.width, monitor.height
         if monitor.transform % 2 == 1 then
             width, height = height, width
@@ -143,7 +154,11 @@ local function special_workspace(name, key, command)
         end
     end
 
-    cover(0, 0, 0, 0)
+    if command then
+        cover(0, 0, 0, 0)
+    else
+        cover(36, 12, 12, 12)
+    end
     refit()
     hl.bind(mod .. " + " .. key, hl.dsp.workspace.toggle_special(name))
     hl.on("monitor.layout_changed", function() refit() end)
@@ -160,7 +175,7 @@ local function special_workspace(name, key, command)
     end)
 end
 
--- Two independent, full-size scratchpads.
+-- Two independent scratchpads, inset from the bar and screen edges.
 for _, key in ipairs({ "S", "N" }) do
     local name = "scratchpad-" .. key:lower()
     special_workspace(name, key)

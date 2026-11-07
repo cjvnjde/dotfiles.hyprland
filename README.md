@@ -31,12 +31,18 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Left Alt` held, then `Right Alt` | Next keyboard layout (`us,ru`) |
 | `Right Alt` held, then `Left Alt` | Previous keyboard layout |
 
+## Scratchpads
+
+`Super+S` and `Super+N` toggle independent scratchpads. `Super+Alt+S/N` moves
+the focused window into one without following it. Scratchpads start below the
+24-pixel bar, with a 12-pixel margin on every side to show the workspace behind.
+
 ## Quake consoles
 
 `Super+grave` toggles the terminal console; `Super+apostrophe` toggles the agent
 console. Moving the pointer outside leaves them open. A left, right, or middle
 click outside a console—including on another monitor—hides it without closing
-the terminal or consuming the click. Full-size scratchpads are unaffected.
+the terminal or consuming the click. Scratchpads are unaffected.
 
 ## Screenshots
 
