@@ -35,7 +35,12 @@ hl.config({
     animations = { enabled = false },
     misc = { force_default_wallpaper = 0, disable_hyprland_logo = true }, -- wallpaper comes from Quickshell
     dwindle = { preserve_split = true },
-    input = { kb_layout = "us,ru", follow_mouse = 1 },
+    input = {
+        kb_layout = "us,ru",
+        -- Hold Left Alt + press Right Alt: next; reverse order: previous.
+        kb_options = "grp:alts_toggle",
+        follow_mouse = 1,
+    },
 })
 
 -- Apps and session
