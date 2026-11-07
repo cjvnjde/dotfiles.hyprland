@@ -22,7 +22,9 @@ end)
 -- Look and input
 hl.config({
     general = {
-        layout = "dwindle", gaps_in = 0, gaps_out = 0, border_size = 0,
+        layout = "dwindle", gaps_in = 0, border_size = 0,
+        -- Fixed room for the 24px bar. Special workspaces override these gaps.
+        gaps_out = { top = 24, right = 0, bottom = 0, left = 0 },
         -- Catppuccin Mocha fallback colors; borders remain disabled.
         col = {
             active_border = "rgb(b4befe)",
@@ -66,31 +68,25 @@ for ws = 1, 10 do
     hl.bind(mod .. " + SHIFT + ALT + " .. key, hl.dsp.window.move({ workspace = ws, follow = false }))
 end
 
--- Two independent, full-size scratchpads.
-for _, key in ipairs({ "S", "N" }) do
-    local name = "scratchpad-" .. key:lower()
-    hl.bind(mod .. " + " .. key, hl.dsp.workspace.toggle_special(name))
-    hl.bind(mod .. " + ALT + " .. key,
-        hl.dsp.window.move({ workspace = "special:" .. name, follow = false }))
-end
-
--- Quake-style consoles, adapted from Omarchy's release candidate.
--- Each starts its command only when its workspace is first created.
-local function console(name, key, command)
+-- Special workspaces use screen-edge geometry, not the normal bar inset.
+-- The bar stays visible and normal workspaces never change size when toggling.
+-- With a command: centered, half-height Quake console; otherwise: full scratchpad.
+local function special_workspace(name, key, command)
     local workspace = "special:" .. name
-    local last_side, last_bottom
+    local last_geometry
 
-    local function cover(side, bottom)
-        if side == last_side and bottom == last_bottom then
+    local function cover(top, right, bottom, left)
+        local geometry = table.concat({ top, right, bottom, left }, ",")
+        if geometry == last_geometry then
             return false
         end
-        last_side, last_bottom = side, bottom
+        last_geometry = geometry
         hl.workspace_rule({
             workspace = workspace,
             gaps_in = 0,
-            gaps_out = { top = 0, right = side, bottom = bottom, left = side },
+            gaps_out = { top = top, right = right, bottom = bottom, left = left },
             no_border = true,
-            on_created_empty = "[workspace " .. workspace .. " silent] " .. command,
+            on_created_empty = command and ("[workspace " .. workspace .. " silent] " .. command) or nil,
         })
         return true
     end
@@ -105,17 +101,19 @@ local function console(name, key, command)
         if monitor.transform % 2 == 1 then
             width, height = height, width
         end
+        width = width / monitor.scale
+        height = height / monitor.scale
         local reserved = monitor.reserved
-        width = width / monitor.scale - reserved.left - reserved.right
-        height = height / monitor.scale - reserved.top - reserved.bottom
-        local tall = math.floor(height * 0.5)
-        local wide = math.min(width, tall * 2)
-        if cover(math.floor((width - wide) / 2), math.floor(height - tall)) then
+        local tall = command and math.floor(height * 0.5) or height
+        local wide = command and math.min(width, tall * 2) or width
+        local side = math.floor((width - wide) / 2)
+        if cover(0, math.max(0, side - reserved.right),
+            math.max(0, math.floor(height - tall) - reserved.bottom), math.max(0, side - reserved.left)) then
             hl.exec_scheduled_prop_refresh_immediately()
         end
     end
 
-    cover(0, 0)
+    cover(0, 0, 0, 0)
     refit()
     hl.bind(mod .. " + " .. key, hl.dsp.workspace.toggle_special(name))
     hl.on("monitor.layout_changed", function() refit() end)
@@ -132,16 +130,25 @@ local function console(name, key, command)
     end)
 end
 
-console("console-terminal", "grave", terminal)
+-- Two independent, full-size scratchpads.
+for _, key in ipairs({ "S", "N" }) do
+    local name = "scratchpad-" .. key:lower()
+    special_workspace(name, key)
+    hl.bind(mod .. " + ALT + " .. key,
+        hl.dsp.window.move({ workspace = "special:" .. name, follow = false }))
+end
+
+special_workspace("console-terminal", "grave", terminal)
 -- An interactive shell loads your mise environment so the agent is on PATH.
 local quoted_agent = "'" .. agent:gsub("'", "'\\''") .. "'"
-console("console-agent", "apostrophe", terminal .. " -e zsh -ic " .. quoted_agent)
+special_workspace("console-agent", "apostrophe", terminal .. " -e zsh -ic " .. quoted_agent)
 
 -- Screenshot of a region to the clipboard
 hl.bind("Print", hl.dsp.exec_cmd([[sh -c 'grim -g "$(slurp)" - | wl-copy']]))
 
 -- Volume and media keys (work on the lock screen too)
 local sink = "@DEFAULT_AUDIO_SINK@"
+hl.bind(mod .. " + M", hl.dsp.exec_cmd("wpctl set-mute " .. sink .. " toggle"))
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 " .. sink .. " 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume " .. sink .. " 5%-"), { locked = true, repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute " .. sink .. " toggle"), { locked = true })
