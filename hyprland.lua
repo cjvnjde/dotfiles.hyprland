@@ -204,8 +204,22 @@ for _, button in ipairs({ "mouse:272", "mouse:273", "mouse:274" }) do
     hl.bind(button, dismiss_console_outside, { non_consuming = true, ignore_mods = true })
 end
 
--- Screenshot of a region to the clipboard
-hl.bind("Print", hl.dsp.exec_cmd([[sh -c 'geometry=$(slurp) && grim -g "$geometry" - | wl-copy']]))
+-- Freeze before selection so browser popovers survive the selector taking focus.
+local function screenshot(command)
+    return hl.dsp.exec_cmd(string.format([[sh -c '
+        image=$(mktemp) || exit
+        trap "rm -f \"$image\"" EXIT
+        # Hyprshot returns before grim; drain stdout before consuming the PNG.
+        hyprshot --mode region --freeze --raw | cat > "$image"
+        [ -s "$image" ] || exit 0
+        directory="$HOME/Pictures/Screenshots"
+        mkdir -p "$directory" || exit
+        output="$directory/Screenshot-$(date +%%Y-%%m-%%d_%%H-%%M-%%S-%%N).png"
+        %s
+    ']], command))
+end
+hl.bind("Print", screenshot([[cp "$image" "$output" && wl-copy --type image/png < "$output"]]))
+hl.bind("SHIFT + Print", screenshot([[satty --filename "$image" --fullscreen --copy-command wl-copy --output-filename "$output" --save-after-copy --disable-notifications --early-exit]]))
 
 -- Volume and media keys (work on the lock screen too)
 local sink = "@DEFAULT_AUDIO_SINK@"
