@@ -206,11 +206,11 @@ for _, button in ipairs({ "mouse:272", "mouse:273", "mouse:274" }) do
 end
 
 -- Screenshot of a region to the clipboard
-hl.bind("Print", hl.dsp.exec_cmd([[sh -c 'grim -g "$(slurp)" - | wl-copy']]))
+hl.bind("Print", hl.dsp.exec_cmd([[sh -c 'geometry=$(slurp) && grim -g "$geometry" - | wl-copy']]))
 
 -- Volume and media keys (work on the lock screen too)
 local sink = "@DEFAULT_AUDIO_SINK@"
-hl.bind(mod .. " + M", hl.dsp.exec_cmd("wpctl set-mute " .. sink .. " toggle"))
+hl.bind(mod .. " + M", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 " .. sink .. " 5%+"), { locked = true, repeating = true })
 hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume " .. sink .. " 5%-"), { locked = true, repeating = true })
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute " .. sink .. " toggle"), { locked = true })

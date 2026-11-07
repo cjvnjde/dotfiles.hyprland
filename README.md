@@ -18,7 +18,7 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+T` | Toggle floating |
 | `Super+W` | Close window |
 | `Super+Escape` | Lock |
-| `Super+Ctrl+Shift+E` | Exit Hyprland |
+| `Super+M` | Toggle default microphone mute |
 | `Super+H/J/K/L` | Focus left/down/up/right |
 | `Super+Shift+H/J/K/L` | Move window |
 | `Super+1..0` | Go to workspace 1-10 |
@@ -27,7 +27,7 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+I` | Toggle split direction |
 | `Super+D` | Toggle window group (tabs) |
 | `Super+drag` | Move (left) / resize (right) |
-| `Print` | Screenshot a region to the clipboard |
+| `Print` | Screenshot a region to the clipboard; Escape cancels without changing it |
 | `Left Alt` held, then `Right Alt` | Next keyboard layout (`us,ru`) |
 | `Right Alt` held, then `Left Alt` | Previous keyboard layout |
 
