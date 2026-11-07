@@ -11,10 +11,26 @@ hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
+-- Hyprland starts from ~/.zprofile, before .zshrc adds user tools to PATH.
+-- Prepend them so apps, Quickshell and launcher commands find mise tools and ~/.local/bin.
+-- The check keeps config reloads from adding them twice.
+do
+    local home = os.getenv("HOME")
+    local path = os.getenv("PATH") or ""
+    for _, dir in ipairs({ home .. "/.local/share/mise/shims", home .. "/.local/bin" }) do
+        if not (":" .. path .. ":"):find(":" .. dir .. ":", 1, true) then
+            path = dir .. ":" .. path
+        end
+    end
+    hl.env("PATH", path)
+end
+
 -- Autostart. Hyprland exports its environment to systemd/D-Bus itself,
 -- and gnome-keyring starts on demand from its systemd user socket.
+-- The polkit agent is started directly (not as a systemd user service) so it
+-- joins this login session; otherwise pkexec falls back to a terminal prompt.
 hl.on("hyprland.start", function()
-    hl.exec_cmd("systemctl --user start hyprpolkitagent")
+    hl.exec_cmd("/usr/lib/hyprpolkitagent/hyprpolkitagent")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("qs")
 end)
@@ -54,7 +70,8 @@ hl.config({
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mod .. " + Space", hl.dsp.exec_cmd(launcher))
 hl.bind(mod .. " + SHIFT + F", hl.dsp.exec_cmd("nautilus"))
-hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("xdg-open about:blank"))
+-- xdg-open about:blank has no handler for the about: scheme; launch the default browser entry instead.
+hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd([[sh -c 'gtk-launch "$(xdg-settings get default-web-browser)"']]))
 hl.bind(mod .. " + W", hl.dsp.window.close())
 
 -- Universal clipboard: keep Ctrl+C as SIGINT in terminals.
@@ -72,7 +89,7 @@ local terminal_classes = {
 for _, key in ipairs({ "C", "V" }) do
     hl.bind(mod .. " + " .. key, function()
         local window = hl.get_active_window()
-        local is_terminal = window and terminal_classes[window.class:lower()]
+        local is_terminal = window and terminal_classes[(window.class or ""):lower()]
         local mods = is_terminal and "CTRL SHIFT" or "CTRL"
         -- Explicit down/up avoids send_shortcut leaving synthetic keys stuck.
         -- No window target: also send to focused layer-shell panels.

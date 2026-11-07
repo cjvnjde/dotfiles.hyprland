@@ -15,6 +15,9 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 |---|---|
 | `Super+Return` | Terminal (ghostty) |
 | `Super+Space` | App launcher (`qs ipc call launcher toggle`) |
+| `Super+Shift+F` | File manager (Nautilus) |
+| `Super+Shift+B` | Default browser |
+| `Super+C` / `Super+V` | Copy / paste in any app (sends Ctrl+Shift+C/V to terminals) |
 | `Super+T` | Toggle floating |
 | `Super+W` | Close window |
 | `Super+M` | Toggle default microphone mute |
@@ -22,6 +25,7 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+Shift+H/J/K/L` | Move window |
 | `Super+1..0` | Go to workspace 1-10 |
 | `Super+Shift+1..0` | Move window to workspace 1-10 |
+| `Super+Shift+Alt+1..0` | Move window to workspace 1-10 without following |
 | `Super+F` | Toggle fullscreen |
 | `Super+I` | Toggle split direction |
 | `Super+A` | Dwindle layout for the current regular workspace |
