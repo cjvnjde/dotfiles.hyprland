@@ -51,6 +51,32 @@ hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("xdg-open about:blank"))
 hl.bind(mod .. " + W", hl.dsp.window.close())
 hl.bind(mod .. " + Escape", hl.dsp.exec_cmd("loginctl lock-session"))
 
+-- Universal clipboard: keep Ctrl+C as SIGINT in terminals.
+-- Add custom terminal app IDs here if needed (matched case-insensitively).
+local terminal_classes = {
+    ["com.mitchellh.ghostty"] = true,
+    ["kitty"] = true,
+    ["alacritty"] = true,
+    ["foot"] = true,
+    ["footclient"] = true,
+    ["org.wezfurlong.wezterm"] = true,
+    ["org.kde.konsole"] = true,
+    ["org.gnome.terminal"] = true,
+}
+for _, key in ipairs({ "C", "V" }) do
+    hl.bind(mod .. " + " .. key, function()
+        local window = hl.get_active_window()
+        local is_terminal = window and terminal_classes[window.class:lower()]
+        local mods = is_terminal and "CTRL SHIFT" or "CTRL"
+        -- Explicit down/up avoids send_shortcut leaving synthetic keys stuck.
+        -- No window target: also send to focused layer-shell panels.
+        hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "down" }))
+        hl.timer(function()
+            hl.dispatch(hl.dsp.send_key_state({ mods = mods, key = key, state = "up" }))
+        end, { timeout = 50, type = "oneshot" })
+    end)
+end
+
 -- Windows
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mod .. " + T", hl.dsp.window.float({ action = "toggle" }))
