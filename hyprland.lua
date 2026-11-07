@@ -21,7 +21,14 @@ end)
 
 -- Look and input
 hl.config({
-    general = { layout = "dwindle", gaps_in = 2, gaps_out = 4, border_size = 2 },
+    general = {
+        layout = "dwindle", gaps_in = 0, gaps_out = 0, border_size = 0,
+        -- Catppuccin Mocha fallback colors; borders remain disabled.
+        col = {
+            active_border = "rgb(b4befe)",
+            inactive_border = "rgb(313244)",
+        },
+    },
     decoration = { rounding = 0 },
     animations = { enabled = false },
     misc = { force_default_wallpaper = 0, disable_hyprland_logo = true }, -- wallpaper comes from Quickshell
