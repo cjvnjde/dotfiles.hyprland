@@ -143,6 +143,37 @@ special_workspace("console-terminal", "grave", terminal)
 local quoted_agent = "'" .. agent:gsub("'", "'\\''") .. "'"
 special_workspace("console-agent", "apostrophe", terminal .. " -e zsh -ic " .. quoted_agent)
 
+-- Hide only the Quake consoles on an outside click, not on mouse movement.
+-- Keep the terminal running in its special workspace and pass the click through.
+local function dismiss_console_outside()
+    local cursor = hl.get_cursor_pos()
+    if not cursor then return end
+    for _, monitor in ipairs(hl.get_monitors()) do
+        local ws = monitor.active_special_workspace
+        if ws and (ws.name == "special:console-terminal" or ws.name == "special:console-agent") then
+            local inside = false
+            for _, window in ipairs(ws:get_windows()) do
+                if window.mapped and not window.hidden then
+                    local at, size = window.at, window.size
+                    local x, y = at.x or at[1], at.y or at[2]
+                    local width, height = size.x or size[1], size.y or size[2]
+                    if cursor.x >= x and cursor.x < x + width
+                        and cursor.y >= y and cursor.y < y + height then
+                        inside = true
+                        break
+                    end
+                end
+            end
+            if not inside then
+                monitor:set_special_workspace(nil)
+            end
+        end
+    end
+end
+for _, button in ipairs({ "mouse:272", "mouse:273", "mouse:274" }) do
+    hl.bind(button, dismiss_console_outside, { non_consuming = true, ignore_mods = true })
+end
+
 -- Screenshot of a region to the clipboard
 hl.bind("Print", hl.dsp.exec_cmd([[sh -c 'grim -g "$(slurp)" - | wl-copy']]))
 

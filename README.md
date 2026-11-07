@@ -28,6 +28,13 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+drag` | Move (left) / resize (right) |
 | `Print` | Screenshot a region to the clipboard |
 
+## Quake consoles
+
+`Super+grave` toggles the terminal console; `Super+apostrophe` toggles the agent
+console. Moving the pointer outside leaves them open. A left, right, or middle
+click outside a console—including on another monitor—hides it without closing
+the terminal or consuming the click. Full-size scratchpads are unaffected.
+
 ## Setup
 
 ```bash
