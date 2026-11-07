@@ -1,224 +1,35 @@
-# Hyprland configuration
+# Hyprland
 
-This is a modular Lua configuration for Hyprland. Hyprland loads
-`hyprland.lua`, which then loads the files in `modules/` with `require()`.
-Saving any loaded file causes Hyprland to reload the configuration
-automatically; it can also be reloaded manually with:
+Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 
-```bash
-hyprctl reload
-```
+| File | What it does |
+|---|---|
+| `hyprland.lua` | Monitors, autostart, look, input, key bindings |
+| `hypridle.conf` | Lock after 5 min, screen off after 5.5 min, suspend after 30 min |
+| `hyprlock.conf` | Lock screen: clock and password field |
+| `local.lua` | Optional per-machine overrides (git-ignored) |
 
-## Modules
+## Keys
 
-| Module | Responsibility |
-| --- | --- |
-| `hyprland.lua` | Entrypoint and module load order |
-| `modules/programs.lua` | Terminal, browser, and launcher commands |
-| `modules/monitor.lua` | Default monitor mode, position, and scale |
-| `modules/workspaces.lua` | Persistent workspaces |
-| `modules/environment.lua` | Cursor environment variables |
-| `modules/autostart.lua` | Quickshell startup |
-| `modules/local.lua` | Optional machine-specific settings, ignored by Git |
-| `modules/appearance.lua` | Layout, gaps, borders, decoration, blur, shadows, and disabled animations |
-| `modules/input.lua` | Keyboard layout, mouse, and touchpad |
-| `modules/bindings.lua` | Keyboard, mouse, media, and screenshot bindings |
-| `modules/window_rules.lua` | Application and XWayland rules |
-| `hyprtoolkit.conf` | Catppuccin Mocha colors, typography, and rounding |
-
-The module loader honors `XDG_CONFIG_HOME`. If it is unset, it loads modules
-from `~/.config/hypr/modules/`.
-
-The loader imports `modules/local.lua` when it exists. Keep commands and
-settings that apply only to the current machine there; Git ignores this file.
-
-The window rules float and pin Quickshell note windows so Hyprland owns their
-stacking, workspace visibility, and movement.
-
-## Desktop appearance
-
-The Quickshell **sun/moon icon** and chat `/theme NAME light|dark` command
-share the GNOME `org.gnome.desktop.interface color-scheme` setting. Dark uses
-Catppuccin Mocha and light uses Latte. `modules/appearance.lua` exposes
-`set_mode(mode)` for Quickshell to update borders, shadows, window group colors,
-and the compositor background without reloading unrelated configuration.
-Quickshell renders `assets/bg_light.png` in light mode and `assets/bg_dark.jpg`
-in dark mode, both with cover scaling. Its wallpaper window stays alive across
-theme changes and retains the old image until the replacement has loaded.
-Quickshell reapplies the selected mode after compositor reloads; without the
-shell running, the compositor starts with Mocha and no custom wallpaper is
-rendered. The separate static `hyprtoolkit.conf` palette is unchanged.
-
-## Keyboard layouts
-
-Hyprland loads the US English and Russian layouts. The Quickshell top bar shows
-the active `EN` or `RU` layout; click it and select a language from the menu.
-There is no keyboard shortcut for changing layouts.
-
-## Keybindings
-
-The main convention mirrors browser shortcuts: `Ctrl` operates within an
-application, while `Super` performs the analogous desktop-level action. For
-example, `Ctrl+T` opens a browser tab and `Super+T` opens the application
-picker; `Ctrl+W` closes a browser tab and `Super+W` closes a window.
-
-### Applications and session
-
-| Binding | Action |
-| --- | --- |
-| `Super+T` | Open the Quickshell application picker |
-| `Super+A` | Open the current AI chat without resetting it |
-| `Super+E` | Start a new `general` AI chat |
-| `Super+O` | Start a new English AI chat |
-| `Super+Shift+A` | Select a screenshot and attach it to the current AI chat |
-| `Super+Shift+E` | Select a screenshot for a new `general` AI chat |
-| `Super+Shift+O` | Select a screenshot for a new English AI chat |
-| `Super+W` | Close active window |
-| `Super+Return` | Open Ghostty |
-| `Super+B` | Open Zen Browser |
+| Key | Action |
+|---|---|
+| `Super+Return` | Terminal (ghostty) |
+| `Super+T` | App launcher (`qs ipc call launcher toggle`) |
+| `Super+W` | Close window |
+| `Super+Escape` | Lock |
 | `Super+Ctrl+Shift+E` | Exit Hyprland |
-| `Print` | Select a region and copy its screenshot to the clipboard |
-| `Shift+Print` | Select a region, save the original, and annotate it with Satty |
-| `Super+U` | Toggle system-audio recording; stop, save MP3, and copy the audio file |
+| `Super+H/J/K/L` | Focus left/down/up/right |
+| `Super+Shift+H/J/K/L` | Move window |
+| `Super+1..0` | Go to workspace 1-10 |
+| `Super+Shift+1..0` | Move window to workspace 1-10 |
+| `Super+F` / `Super+Shift+F` | Fullscreen / float |
+| `Super+I` | Toggle split direction |
+| `Super+D` | Toggle window group (tabs) |
+| `Super+drag` | Move (left) / resize (right) |
+| `Print` | Screenshot a region to the clipboard |
 
-### Windows and layout
-
-| Binding | Action |
-| --- | --- |
-| `Super+F` | Toggle fullscreen |
-| `Super+Shift+M` | Toggle maximized mode while keeping reserved bar space |
-| `Super+Shift+F` | Toggle floating |
-| `Super+P` | Toggle pseudotiling |
-| `Super+I` | Toggle the dwindle split direction |
-| `Super+D` | Toggle window grouping |
-| `Super+H/J/K/L` | Focus the window left/down/up/right |
-| `Super+Shift+H/J/K/L` | Move the window left/down/up/right |
-| `Super+Ctrl+H/J/K/L` | Move the window into the group left/down/up/right |
-| `Super+Alt+H` | Select previous window in the group |
-| `Super+Alt+L` | Select next window in the group |
-| `Super+left mouse button` | Drag a window |
-| `Super+right mouse button` | Resize a window |
-
-### Workspaces
-
-| Binding | Action |
-| --- | --- |
-| `Super+1` ... `Super+9` | Switch to workspace 1 ... 9 |
-| `Super+0` | Switch to workspace 10 |
-| `Super+Shift+1` ... `Super+Shift+9` | Move active window to workspace 1 ... 9 |
-| `Super+Shift+0` | Move active window to workspace 10 |
-| `Super+S` | Toggle the `magic` special workspace |
-| `Super+Shift+S` | Move active window to the `magic` special workspace |
-
-Workspaces 1 through 5 are persistent, so Hyprland creates them at startup and
-keeps them available when they have no windows.
-
-### Audio and media
-
-| Binding | Action |
-| --- | --- |
-| `Volume Up` | Raise output volume by 5%, capped at 100% |
-| `Volume Down` | Lower output volume by 5% |
-| `Audio Mute` | Toggle output mute |
-| `Microphone Mute` | Toggle microphone mute |
-| `Media Next` | Next track |
-| `Media Play` | Toggle play/pause |
-| `Media Pause` | Toggle play/pause |
-| `Media Previous` | Previous track |
-
-## Dependencies
-
-The package names below are for Arch Linux.
-
-### Core and configured applications
-
-| Package/component | Used for |
-| --- | --- |
-| `hyprland` | Compositor and Lua configuration runtime |
-| `ghostty` | Terminal opened by `Super+Return` |
-| `quickshell` | Provides `qs`, started as the `main` shell configuration, including desktop wallpapers |
-| `wireplumber` | Provides `wpctl` for volume and microphone bindings |
-| `playerctl` | MPRIS media controls |
-| `zen-browser-bin` (AUR) | Zen Browser opened by `Super+B` |
-
-Install the repository packages with:
+## Setup
 
 ```bash
-sudo pacman -S hyprland ghostty quickshell wireplumber playerctl
+bash hyprland/setup.sh enable
 ```
-
-Install Zen Browser from the AUR:
-
-```bash
-yay -S zen-browser-bin
-```
-
-The autostart command is `qs -c main`, so a working Quickshell configuration
-named `main` must also exist in Quickshell's configuration search path. The
-Hyprland files in this directory do not provide that shell configuration.
-
-### Screenshots
-
-The `Print` binding tries the following backends in order. Only one complete
-backend is required:
-
-1. `grimshot`
-2. `hyprshot`
-3. `grim`, `slurp`, and `wl-copy`
-
-The fully repository-based fallback can be installed with:
-
-```bash
-sudo pacman -S grim slurp wl-clipboard libnotify
-```
-
-`wl-clipboard` provides `wl-copy`. `libnotify` provides `notify-send`, which is
-used to report that no screenshot backend is available. A notification daemon
-or a Quickshell notification service must be running for that message to be
-visible.
-
-`Shift+Print` uses `grim`, `slurp`, `satty`, and `wl-copy`. It saves the original
-capture to `~/Pictures/Screenshots` (or the configured XDG Pictures directory)
-with a `-raw.png` suffix. In Satty, press `Enter` or `Ctrl+C` to copy the
-annotated image to the clipboard, save it beside the original, and close Satty.
-
-### System-audio recording
-
-`Super+U` runs `scripts/record-audio.py`: press once to start, then again to stop.
-`U` is on the Dvorak home row; this binding uses the letter emitted by the
-keyboard, so firmware-level Dvorak does not need a system layout change.
-Start and completion notifications are silent to avoid recording their sounds.
-
-The recorder captures the default output's monitor source, never the microphone.
-It includes all applications playing through that output, with no video.
-The output is selected at startup; stop and restart if you switch audio devices.
-Timestamped MP3 files are saved under the XDG Music directory's `Recordings`
-folder, falling back to `~/Music/Recordings`.
-
-After stopping, the clipboard contains a `text/uri-list` file reference, not
-plain path text or raw audio bytes. Paste into an application that accepts file
-attachments; this does not create an app-specific voice message. Applications
-without file-paste support need their attachment picker or drag-and-drop.
-If clipboard copying fails, the recording remains saved and a notification
-reports its location.
-
-Dependencies: Python 3, FFmpeg with PulseAudio input and `libmp3lame`, `pactl`
-(`libpulse` on Arch), `wl-clipboard`, `libnotify`, and a systemd user session.
-`xdg-user-dirs` supplies the optional Music-directory lookup.
-FFmpeg runs in the transient `hypr-system-audio-recording.service` user unit.
-For recording failures, inspect:
-
-```bash
-journalctl --user -u hypr-system-audio-recording.service
-```
-
-### Runtime configuration modules
-
-No third-party Lua modules are required. All Lua files used by this config live
-under `modules/` and are loaded with Hyprland's configuration-aware `require()`.
-
-## Customization
-
-Change application commands in `modules/programs.lua`. Keep machine-specific
-display changes in `modules/monitor.lua`, input changes in `modules/input.lua`,
-and personal shortcuts in `modules/bindings.lua`.
