@@ -49,7 +49,6 @@ hl.bind(mod .. " + Space", hl.dsp.exec_cmd(launcher))
 hl.bind(mod .. " + SHIFT + F", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("xdg-open about:blank"))
 hl.bind(mod .. " + W", hl.dsp.window.close())
-hl.bind(mod .. " + Escape", hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Universal clipboard: keep Ctrl+C as SIGINT in terminals.
 -- Add custom terminal app IDs here if needed (matched case-insensitively).

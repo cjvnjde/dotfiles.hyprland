@@ -17,7 +17,6 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+Space` | App launcher (`qs ipc call launcher toggle`) |
 | `Super+T` | Toggle floating |
 | `Super+W` | Close window |
-| `Super+Escape` | Lock |
 | `Super+M` | Toggle default microphone mute |
 | `Super+H/J/K/L` | Focus left/down/up/right |
 | `Super+Shift+H/J/K/L` | Move window |
