@@ -24,12 +24,18 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `Super+Shift+1..0` | Move window to workspace 1-10 |
 | `Super+F` | Toggle fullscreen |
 | `Super+I` | Toggle split direction |
+| `Super+A` | Dwindle layout for the current regular workspace |
+| `Super+O` | Scrolling layout for the current regular workspace |
+| `Super+E` | Master layout for the current regular workspace |
 | `Super+D` | Toggle window group (tabs) |
 | `Super+drag` | Move (left) / resize (right) |
 | `Print` | Freeze, select a region, then silently save and copy; Escape cancels |
 | `Shift+Print` | Freeze, select a region, then annotate in Satty; copying silently saves too |
 | `Left Alt` held, then `Right Alt` | Next keyboard layout (`us,ru`) |
 | `Right Alt` held, then `Left Alt` | Previous keyboard layout |
+
+Layout selection uses the adjacent Dvorak home-row keys `A/O/E`. Each regular
+workspace can use a different layout; config reload resets selections to Dwindle.
 
 ## Scratchpads
 

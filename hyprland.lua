@@ -31,7 +31,10 @@ hl.config({
             inactive_border = "rgb(313244)",
         },
     },
-    decoration = { rounding = 0 },
+    decoration = {
+        rounding = 0,
+        dim_special = 0.35, -- Make scratchpads/consoles stand out from the workspace behind.
+    },
     animations = { enabled = false },
     misc = { force_default_wallpaper = 0, disable_hyprland_logo = true }, -- wallpaper comes from Quickshell
     dwindle = {
@@ -85,6 +88,17 @@ hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + I", hl.dsp.layout("togglesplit"))
 hl.bind(mod .. " + D", hl.dsp.group.toggle())
+
+-- Adjacent Dvorak home-row keys select a layout for this regular workspace.
+-- Runtime workspace rules reset to the default (Dwindle) on config reload.
+for key, layout in pairs({ A = "dwindle", O = "scrolling", E = "master" }) do
+    hl.bind(mod .. " + " .. key, function()
+        local workspace = hl.get_active_workspace()
+        if workspace then
+            hl.workspace_rule({ workspace = tostring(workspace.id), layout = layout })
+        end
+    end)
+end
 
 for key, direction in pairs({ H = "left", J = "down", K = "up", L = "right" }) do
     hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = direction }))
