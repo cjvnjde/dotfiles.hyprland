@@ -151,7 +151,6 @@ local function special_workspace(name, key, command)
             gaps_in = 0,
             gaps_out = { top = top, right = right, bottom = bottom, left = left },
             no_border = true,
-            on_created_empty = command and ("[workspace " .. workspace .. " silent] " .. command) or nil,
         })
         return true
     end
@@ -186,6 +185,11 @@ local function special_workspace(name, key, command)
     end
 
     if command then
+        hl.on("workspace.created", function(ws)
+            if ws.name == workspace and ws.is_empty then
+                hl.exec_cmd("[workspace " .. workspace .. " silent] " .. command)
+            end
+        end)
         cover(0, 0, 0, 0)
     else
         cover(36, 12, 12, 12)
