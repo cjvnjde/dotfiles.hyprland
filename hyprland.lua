@@ -52,7 +52,11 @@ hl.config({
         dim_special = 0.35, -- Make scratchpads/consoles stand out from the workspace behind.
     },
     animations = { enabled = false },
-    misc = { force_default_wallpaper = 0, disable_hyprland_logo = true }, -- wallpaper comes from Quickshell
+    misc = {
+        force_default_wallpaper = 0, disable_hyprland_logo = true, -- wallpaper comes from Quickshell
+        -- Let activation requests reveal the target window, including special workspaces.
+        focus_on_activate = true,
+    },
     dwindle = {
         preserve_split = true,
         use_active_for_splits = true,
