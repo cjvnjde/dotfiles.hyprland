@@ -38,12 +38,12 @@ end)
 -- Look and input
 hl.config({
     general = {
-        layout = "dwindle", gaps_in = 0, border_size = 0,
+        layout = "dwindle", gaps_in = 0, border_size = 2,
         -- Fixed room for the 24px bar. Special workspaces override these gaps.
         gaps_out = { top = 24, right = 0, bottom = 0, left = 0 },
-        -- Catppuccin Mocha fallback colors; borders remain disabled.
+        -- Muted lavender focus outline; inactive borders stay dark.
         col = {
-            active_border = "rgb(b4befe)",
+            active_border = "rgb(8b91bf)",
             inactive_border = "rgb(313244)",
         },
     },

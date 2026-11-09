@@ -9,6 +9,12 @@ Minimal Hyprland setup. Linked to `~/.config/hypr` by `setup.sh`.
 | `hyprlock.conf` | Lock screen: clock and password field |
 | `local.lua` | Optional per-machine overrides (git-ignored) |
 
+## Appearance
+
+Windows use 2px borders: muted lavender (`#8b91bf`) when focused and dark
+Catppuccin surface (`#313244`) otherwise. Scratchpads and Quake consoles remain
+borderless.
+
 ## Keys
 
 | Key | Action |
