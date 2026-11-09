@@ -70,6 +70,10 @@ hl.config({
     },
 })
 
+-- K2 Pro F13/F14: bind XKB keycodes, not the remapped XF86 keysyms.
+hl.bind("code:191", hl.dsp.exec_cmd("hyprctl switchxkblayout all 0"), { locked = true, ignore_mods = true })
+hl.bind("code:192", hl.dsp.exec_cmd("hyprctl switchxkblayout all 1"), { locked = true, ignore_mods = true })
+
 -- Apps and session
 hl.bind(mod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mod .. " + Space", hl.dsp.exec_cmd(launcher))

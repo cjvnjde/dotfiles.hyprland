@@ -43,9 +43,22 @@ borderless.
 | `Shift+Print` | Freeze, select a region, then annotate in Satty; copying silently saves too |
 | `Left Alt` held, then `Right Alt` | Next keyboard layout (`us,ru`) |
 | `Right Alt` held, then `Left Alt` | Previous keyboard layout |
+| `F13` / `code:191` (K2 Pro switch to Dvorak) | Select English US on all keyboards; works with modifiers held and on the lock screen |
+| `F14` / `code:192` (K2 Pro switch to QWERTY) | Select Russian on all keyboards; works with modifiers held and on the lock screen |
 
 Layout selection uses the adjacent Dvorak home-row keys `A/O/E`. Each regular
 workspace can use a different layout; config reload resets selections to Dwindle.
+
+The custom K2 Pro firmware sends F13 when its side switch moves to Dvorak,
+and F14 when it moves to QWERTY. These select US and Russian, respectively,
+rather than toggling languages. Keep `input.kb_layout` ordered `us,ru`,
+since the bindings select indices 0 and 1.
+The bindings use physical XKB keycodes 191/192 (Linux evdev codes 183/184),
+not `F13`/`F14` keysyms: the default XKB map names these keys
+`XF86Tools`/`XF86Launch5`. Keysym bindings miss the notifications and let
+them reach the focused application.
+Notifications are not replayed after login or reconnect; flip away from
+your desired position and back if the desktop missed the change.
 
 ## Scratchpads
 
