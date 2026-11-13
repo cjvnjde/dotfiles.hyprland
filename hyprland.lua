@@ -109,6 +109,19 @@ for _, key in ipairs({ "C", "V" }) do
     end)
 end
 
+-- Browser picture-in-picture stays above tiled windows across workspaces.
+-- Match the PiP title only, leaving normal browser windows tiled.
+hl.window_rule({
+    name = "browser-picture-in-picture",
+    match = {
+        class = "(?i)^(firefox|firefox-esr|org\\.mozilla\\.firefox|zen|zen-browser|app\\.zen_browser\\.zen)$",
+        title = "^Picture-in-Picture$",
+    },
+    float = true,
+    pin = true,
+    size = "640 360",
+})
+
 -- Windows
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mod .. " + T", hl.dsp.window.float({ action = "toggle" }))

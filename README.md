@@ -60,6 +60,12 @@ them reach the focused application.
 Notifications are not replayed after login or reconnect; flip away from
 your desired position and back if the desktop missed the change.
 
+## Browser picture-in-picture
+
+Firefox and Zen picture-in-picture video windows float above tiled windows and
+are pinned across workspaces on their monitor. They open at 640 × 360; use
+`Super+right-drag` to resize them. Normal browser windows are unaffected.
+
 ## Scratchpads
 
 `Super+S` and `Super+N` toggle independent scratchpads. `Super+Alt+S/N` moves
